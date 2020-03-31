@@ -1,6 +1,6 @@
 ## A Python Chatbot
 
-###Learning Objectives
+### Learning Objectives
 - Rule-Based Chatbots
 - Retrieval-Based Chatbots
 - Deep Learning and Generative Chatbots
