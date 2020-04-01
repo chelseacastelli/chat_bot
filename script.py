@@ -1,29 +1,32 @@
-# importing regex and nltk
-import re, nltk
-from nltk.corpus import stopwords
+import nltk, re
 from nltk.tokenize import word_tokenize
-from nltk.stem import WordNetLemmatizer
-# importing Counter to get word counts for bag of words
+# importing ngrams module from nltk
+from nltk.util import ngrams
 from collections import Counter
-# importing a passage from Through the Looking Glass
-from looking_glass import looking_glass_text
-# importing part-of-speech function for lemmatization
-from part_of_speech import get_part_of_speech
-
+from looking_glass import looking_glass_full_text
 # Change text to another string:
-text = looking_glass_text
+text = looking_glass_full_text
 
 cleaned = re.sub('\W+', ' ', text).lower()
 tokenized = word_tokenize(cleaned)
 
-stop_words = stopwords.words('english')
-filtered = [word for word in tokenized if word not in stop_words]
+# Change the n value to 2:
+looking_glass_bigrams = ngrams(tokenized, 2)
+looking_glass_bigrams_frequency = Counter(looking_glass_bigrams)
 
-normalizer = WordNetLemmatizer()
-normalized = [normalizer.lemmatize(token, get_part_of_speech(token)) for token in filtered]
-# Comment out the print statement below
-# print(normalized)
+# Change the n value to 3:
+looking_glass_trigrams = ngrams(tokenized, 3)
+looking_glass_trigrams_frequency = Counter(looking_glass_trigrams)
 
-# Define bag_of_looking_glass_words & print:
-bag_of_looking_glass_words = Counter(normalized)
-print(bag_of_looking_glass_words)
+# Change the n value to a number greater than 3:
+looking_glass_ngrams = ngrams(tokenized, 4)
+looking_glass_ngrams_frequency = Counter(looking_glass_ngrams)
+
+print("Looking Glass Bigrams:")
+print(looking_glass_bigrams_frequency.most_common(10))
+
+print("\nLooking Glass Trigrams:")
+print(looking_glass_trigrams_frequency.most_common(10))
+
+print("\nLooking Glass n-grams:")
+print(looking_glass_ngrams_frequency.most_common(10))
